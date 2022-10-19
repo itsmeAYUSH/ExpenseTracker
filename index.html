@@ -1,0 +1,35 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <form action="" onsubmit="saveToLocalStorage(event)" class="form">
+    
+        <label for="text">Choose Expense Amount</label>
+        <input type="number" name="amount" id="amount" required>
+        <br>
+        <label for="text">Choose Discription</label>
+        <input type="text" name="discription" id="discription" required>
+        <br>
+        <label for="text">Choose A Catagory</label>
+        <input type="text" name="catagory" id="catagory" required>
+        <br>
+        <button class="btn">Add Expense</button>
+        <p>All Expenses will be dispayed below</p>
+        <ol style="list-style-type:upper-roman" id="listOfExpense">
+                   
+        </ol>
+    </form>
+
+
+
+
+
+    <script src="./index.js"></script>
+</body>
+</html>

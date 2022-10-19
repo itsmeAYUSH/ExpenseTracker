@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  } 
+body{
+    background-color: #222831;
+    color: #EEEEEE;
+}
+form{
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    height: 400px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+input{
+    color: #0F4C75;
+}
+input{
+    height: 30px;
+    margin: 2px;
+}
+.btn{
+    height: 40px;
+    width: 100px;
+    background-color: #00ADB5;
+}
+.btn:hover{
+    color:#EEEEEE ;
+    background-color: #0F4C75;
+}
+.editbtn{
+    background-color:#3282B8;
+}
+.deletebtn{
+    background-color:#F47174;
+}
+p{
+    margin-top: 50px;
+}
+ol{
+    margin-bottom: 40px;
+}
