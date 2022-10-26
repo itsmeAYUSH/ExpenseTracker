@@ -1,19 +1,17 @@
-// user = expense
-//User = Expense
 
+//////////////////////////////DOM//////////////////////////////
 window.addEventListener("DOMContentLoaded", () => {
-    const localStorageObj = localStorage;
-    const localstoragekeys  = Object.keys(localStorageObj)
-
-    for(var i =0; i< localstoragekeys.length; i++){
-        const key = localstoragekeys[i]
-        const expenseDetailsString = localStorageObj[key];
-        const expenseDetailsObj = JSON.parse(expenseDetailsString);
-        addExpense(expenseDetailsObj)
-    }
+    axios.get("https://crudcrud.com/api/b364c29d03b8424ab673c6dab8d134cb/data")
+        .then((response) => {
+            for (var i = 0; i < response.data.length; i++) {
+                addExpense(response.data[i])
+            }
+        })
 })
 
-function saveToLocalStorage(event){
+//////////////////////////////POST REQUEST//////////////////////////////
+
+function saveToLocalStorage(event) {
     event.preventDefault();
     const amount = event.target.amount.value;
     const discription = event.target.discription.value;
@@ -22,41 +20,68 @@ function saveToLocalStorage(event){
         amount,
         discription,
         catagory,
-      }
-      localStorage.setItem(obj.discription,JSON.stringify(obj));
-      addExpense(obj);
-}
-function addExpense(expense){
-    if(localStorage.getItem(expense.discription)!== null){
-        removeExpense(expense.discription);
     }
-    const parentNode = document.getElementById('listOfExpense');
-    const childHTML = `<li id=${expense.discription}> ${expense.amount} - ${expense.discription} - ${expense.catagory}
-    <button class="editbtn" onCLick=editExpense('${expense.amount}','${expense.discription}','${expense.catagory}')>Edit expense</button>
-    <button class="deletebtn" onCLick=deleteExpense('${expense.discription}')>Delete expense</button>
-    </li>`;
-    parentNode.innerHTML =  parentNode.innerHTML + childHTML;
+    axios.post("https://crudcrud.com/api/b364c29d03b8424ab673c6dab8d134cb/data", obj)
+        .then((response) => {
+            addExpense(response.data)
+        })
+        .catch((err) => {
+            const er = document.getElementById('error');
+            er.innerHTML = 'Something Went Wrong';
+            console.log(err);
+        })
 }
 
-function deleteExpense(discription){
-   localStorage.removeItem(discription);
-    removeExpense(discription);
+//////////////////////////////ADD EXPENSE//////////////////////////////
+
+function addExpense(expense) {
+    document.getElementById('amount').value = '';
+    document.getElementById('discription').value = '';
+    document.getElementById('catagory').value ='';
+
+    if(localStorage.getItem(expense._id)!== null){
+        removeExpense(expense._id);
+    }
+
+
+    const parentNode = document.getElementById('listOfExpense');
+    const childHTML = `<li id=${expense._id}> ${expense.amount} - ${expense.discription} - ${expense.catagory}
+                            <button class="editbtn" onCLick=editExpense('${expense.amount}','${expense.discription}','${expense.catagory}','${expense._id}')>Edit expense</button>
+                            <button class="deletebtn" onCLick=deleteExpense('${expense._id}')>Delete expense</button>
+                        </li>`;
+    parentNode.innerHTML = parentNode.innerHTML + childHTML;
 }
 
-function removeExpense(discription){
+//////////////////////////////DELETE EXPENSE//////////////////////////////
+
+function deleteExpense(trackerId) {
+    axios.delete(`https://crudcrud.com/api/b364c29d03b8424ab673c6dab8d134cb/data/${trackerId}`)
+        .then((response) => {
+            removeExpense(trackerId)
+        })
+        .catch((err) => {
+            const er = document.getElementById('error');
+            er.innerHTML = 'Something Went Wrong';
+            console.log(err);
+        })
+}
+//////////////////////////////DELETE FROM SCREEN//////////////////////////////
+
+function removeExpense(trackerId) {
     const parentNode = document.getElementById('listOfExpense');
-    const deletingChildNode = document.getElementById(discription);
-    if(deletingChildNode){
+    const deletingChildNode = document.getElementById(trackerId);
+    if (deletingChildNode) {
         parentNode.removeChild(deletingChildNode);
     }
-    
-}   
-function editExpense(amount,discription,catagory){
+}
+
+//////////////////////////////EDIT EXPENSE/////////////////////////////
+
+function editExpense(amount, discription, catagory,trackerId) {
     document.getElementById('amount').value = amount;
     document.getElementById('discription').value = discription;
     document.getElementById('catagory').value = catagory;
-    deleteExpense(discription);
-
+    deleteExpense(trackerId);
 }
 
 
