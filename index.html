@@ -6,9 +6,12 @@
     <title>Document</title>
     <link rel="stylesheet" href="./style.css">
 </head>
-<body>
+<body>  
+    <hr>
+    <h1 style="text-align:center">Expense Tracker</h1>
+    <hr>
 
-    <form action="" onsubmit="saveToLocalStorage(event)" class="form">
+    <form onsubmit="saveToLocalStorage(event)" class="form">
     
         <label for="text">Choose Expense Amount</label>
         <input type="number" name="amount" id="amount" required>
@@ -20,16 +23,21 @@
         <input type="text" name="catagory" id="catagory" required>
         <br>
         <button class="btn">Add Expense</button>
+   
+    </form>
+    <div class="result">
         <p>All Expenses will be dispayed below</p>
         <ol style="list-style-type:upper-roman" id="listOfExpense">
                    
         </ol>
-    </form>
+        <h4 id="error"></h4>
+    </div>
 
 
 
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js"></script>
     <script src="./index.js"></script>
 </body>
 </html>
